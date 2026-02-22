@@ -7,7 +7,7 @@ Production-style MVP built with **Next.js 14 + TypeScript + Tailwind CSS**.
 ```bash
 npm install
 mkdir -p data
-cp .env.example .env.local
+cp .env.example .env
 npx prisma generate
 npx prisma migrate dev --name init
 npm run dev
@@ -22,7 +22,7 @@ npm run lint
 
 ## Environment
 
-Copy `.env.example` to `.env.local` and configure values:
+Copy `.env.example` to `.env` and configure values (single source of truth for both Next.js and Prisma CLI):
 
 ```bash
 DATABASE_URL="file:./data/app.db"
@@ -32,6 +32,7 @@ TELEGRAM_CHAT_ID=
 APP_URL=http://localhost:3000
 ```
 
+- Keep `DATABASE_URL` only in `.env` (avoid duplicating it in `.env.local` to prevent accidental DB divergence).
 - SQLite database file is stored at `./data/app.db` via Prisma.
 - Create the `data` directory manually (`mkdir -p data`) or it will be created automatically by server-side auth routes.
 - Run Prisma migration after env setup: `npx prisma migrate dev --name init`.

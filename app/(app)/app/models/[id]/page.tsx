@@ -3,6 +3,7 @@ import { AlertTriangle, Sparkles } from 'lucide-react';
 import { getAvailableModelById } from '@/lib/available-models';
 import { Badge } from '@/components/ui/badge';
 import { LinkButton } from '@/components/ui/button';
+import { FavoriteToggleButton } from '@/components/app/favorite-toggle-button';
 import { Card } from '@/components/ui/card';
 
 export default function ModelDetailsPage({ params }: { params: { id: string } }) {
@@ -66,10 +67,13 @@ export default function ModelDetailsPage({ params }: { params: { id: string } })
           <Sparkles className="size-3.5" /> Виртуальная модель (18+)
         </p>
 
-        <div className="mt-5 flex flex-wrap gap-2">
-          {model.tags.map((tag) => (
-            <Badge key={tag} text={tag} className="border-border/90" />
-          ))}
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2">
+            {model.tags.map((tag) => (
+              <Badge key={tag} text={tag} className="border-border/90" />
+            ))}
+          </div>
+          <FavoriteToggleButton modelId={model.id} />
         </div>
       </Card>
 
@@ -93,7 +97,7 @@ export default function ModelDetailsPage({ params }: { params: { id: string } })
           ))}
         </div>
 
-        <LinkButton href={`/app/generate/${model.id}`} className="mt-6">
+        <LinkButton href={`/app/models/${model.id}/generate`} className="mt-6">
           Перейти к генерации
         </LinkButton>
       </Card>

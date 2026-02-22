@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils';
 const items = [
   { href: '/app', label: 'Dashboard' },
   { href: '/app/models', label: 'Models' },
-  { href: '/app/generate', label: 'Generate' },
   { href: '/app/schedule', label: 'Schedule' },
   { href: '/app/analytics', label: 'Analytics' },
   { href: '/app/billing', label: 'Billing' },

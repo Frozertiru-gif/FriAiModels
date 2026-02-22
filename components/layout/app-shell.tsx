@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu } from 'lucide-react';
+import { ChevronRight, Menu } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -19,11 +19,13 @@ const items = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const currentItem = items.find((item) => (item.href === '/app' ? pathname === item.href : pathname.startsWith(item.href)));
+  const pageTitle = currentItem?.label ?? 'Dashboard';
 
   return (
-    <div className="min-h-screen md:grid md:grid-cols-[240px_1fr]">
-      <aside className={cn('fixed inset-y-0 left-0 z-30 w-60 border-r border-border bg-background p-4 transition md:static md:translate-x-0', open ? 'translate-x-0' : '-translate-x-full')}>
-        <h2 className="mb-6 text-xl font-semibold">FryAIModels</h2>
+    <div className="min-h-screen bg-background md:grid md:grid-cols-[240px_1fr]">
+      <aside className={cn('fixed inset-y-0 left-0 z-30 w-60 border-r border-border bg-background/95 p-4 backdrop-blur transition md:static md:translate-x-0', open ? 'translate-x-0' : '-translate-x-full')}>
+        <h2 className="mb-6 text-xl font-semibold tracking-tight">FryAIModels</h2>
         <nav className="space-y-1">
           {items.map((item) => {
             const active = item.href === '/app' ? pathname === item.href : pathname.startsWith(item.href);
@@ -44,8 +46,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </nav>
       </aside>
 
-      <main>
-        <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-border bg-background/90 px-4 backdrop-blur md:px-8">
+      <main className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_35%_at_60%_2%,rgba(109,107,255,0.18),transparent_80%),radial-gradient(35%_30%_at_95%_5%,rgba(45,212,191,0.1),transparent_100%)]" />
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur md:px-8">
           <button
             className="rounded-lg border border-border p-2 md:hidden"
             onClick={() => setOpen((prev) => !prev)}
@@ -53,9 +56,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           >
             <Menu className="size-4" />
           </button>
-          <p className="text-sm text-muted">MVP dashboard (mock data)</p>
+          <div className="hidden items-center gap-2 text-sm md:flex">
+            <span className="text-muted">App</span>
+            <ChevronRight className="size-4 text-muted" />
+            <span className="font-medium text-foreground">{pageTitle}</span>
+          </div>
+          <div className="rounded-full border border-border bg-card/80 px-3 py-1 text-xs text-muted backdrop-blur">User workspace</div>
         </header>
-        <div className="p-4 md:p-8">{children}</div>
+        <div className="relative p-4 md:p-8">{children}</div>
       </main>
     </div>
   );

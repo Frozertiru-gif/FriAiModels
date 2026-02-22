@@ -8,18 +8,18 @@ export default function SettingsPage() {
       <Card>
         <h1 className="text-xl font-semibold">Profile</h1>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <Input defaultValue="Operations Manager" aria-label="Name" />
-          <Input defaultValue="ops@friaimodels.com" aria-label="Email" />
+          <Input placeholder="Ваше имя" aria-label="Name" />
+          <Input placeholder="you@example.com" aria-label="Email" />
         </div>
       </Card>
       <Card>
         <h2 className="text-lg font-semibold">Notifications</h2>
-        <p className="mt-2 text-sm text-muted">Email summaries: enabled. Failure alerts: enabled.</p>
+        <p className="mt-2 text-sm text-muted">Настройки уведомлений станут доступны после подключения рабочих интеграций.</p>
       </Card>
       <Card>
         <h2 className="text-lg font-semibold">API key</h2>
-        <p className="mt-2 text-sm text-muted">API access placeholder for future backend integration.</p>
-        <Button variant="secondary" className="mt-4">Generate key</Button>
+        <p className="mt-2 text-sm text-muted">Раздел API появится позже. Сейчас ключи недоступны.</p>
+        <Button variant="secondary" className="mt-4" disabled>Generate key</Button>
       </Card>
     </div>
   );

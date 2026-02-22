@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run db:migrate && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:migrate": "node scripts/ensure-data-dir.mjs && prisma migrate deploy",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "lucide-react": "^0.475.0",

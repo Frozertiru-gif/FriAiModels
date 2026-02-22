@@ -53,7 +53,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       <main className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_35%_at_60%_2%,rgba(109,107,255,0.18),transparent_80%),radial-gradient(35%_30%_at_95%_5%,rgba(45,212,191,0.1),transparent_100%)]" />
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur md:px-8">
+        <header className="sticky top-0 z-40 flex h-12 items-center justify-between border-b border-white/5 bg-background/70 px-4 backdrop-blur-md sm:h-14 sm:px-6 lg:px-8">
           <button
             className="rounded-lg border border-border p-2 md:hidden"
             onClick={() => setOpen((prev) => !prev)}
@@ -66,9 +66,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <ChevronRight className="size-4 text-muted" />
             <span className="font-medium text-foreground">{pageTitle}</span>
           </div>
-          <div className="rounded-full border border-border bg-card/80 px-3 py-1 text-xs text-muted backdrop-blur">Plan: {getEffectivePlan(subscription).toUpperCase()}</div>
+          <div className="flex items-center gap-2 md:hidden">
+            <span className="text-xs font-semibold tracking-wide text-foreground">FryAI</span>
+          </div>
+          <div className="rounded-full border border-white/10 bg-card/80 px-3 py-1 text-xs tracking-wide text-muted backdrop-blur">Plan: {getEffectivePlan(subscription).toUpperCase()}</div>
         </header>
-        <div className="relative p-4 md:p-8">{children}</div>
+        <div className="relative mx-auto w-full max-w-[1100px] px-4 py-4 sm:px-6 sm:py-8 lg:px-8">{children}</div>
       </main>
     </div>
   );

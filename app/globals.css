@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  @apply bg-background text-foreground antialiased;
+  @apply bg-background text-sm text-foreground antialiased sm:text-base;
   background-image: radial-gradient(circle at 10% 10%, rgba(109, 107, 255, 0.14), transparent 35%);
 }
 
@@ -25,7 +25,7 @@ a {
 
 @layer components {
   .surface {
-    @apply rounded-2xl border border-white/10 bg-card/70 shadow-[0_18px_55px_-24px_rgba(0,0,0,0.8)] backdrop-blur;
+    @apply rounded-xl border border-white/10 bg-card/70 shadow-[0_14px_42px_-24px_rgba(0,0,0,0.75)] backdrop-blur sm:rounded-2xl sm:border-white/10 sm:shadow-[0_18px_55px_-24px_rgba(0,0,0,0.8)];
   }
 
   .section-container {

@@ -18,7 +18,7 @@ export default function HomePage() {
         <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-6xl">Build AI Influencers. Monetize Attention.</h1>
         <p className="mx-auto mt-5 max-w-2xl text-base text-muted md:text-lg">Create, automate, and scale virtual models for TikTok, YouTube & premium platforms.</p>
         <div className="mt-8 flex justify-center gap-3">
-          <LinkButton href="/app">Start Creating</LinkButton>
+          <LinkButton href="/register">Start Creating</LinkButton>
           <LinkButton href="/showcase" variant="secondary">
             View Showcase
           </LinkButton>

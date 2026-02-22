@@ -22,9 +22,12 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <LinkButton href="/app" className="hidden md:inline-flex">
-          Start Creating
-        </LinkButton>
+        <div className="hidden items-center gap-2 md:flex">
+          <LinkButton href="/login" variant="secondary">
+            Login
+          </LinkButton>
+          <LinkButton href="/register">Sign up</LinkButton>
+        </div>
       </div>
     </header>
   );

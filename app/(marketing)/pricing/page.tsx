@@ -1,4 +1,5 @@
 import { Card } from '@/components/ui/card';
+import { LinkButton } from '@/components/ui/button';
 import { plans } from '@/lib/mock/plans';
 
 export default function PricingPage() {
@@ -18,6 +19,9 @@ export default function PricingPage() {
             </ul>
           </Card>
         ))}
+      </div>
+      <div className="mt-10 flex justify-center">
+        <LinkButton href="/register">Start Creating</LinkButton>
       </div>
     </section>
   );

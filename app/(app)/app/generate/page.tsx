@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowRight, Heart, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { AVAILABLE_GIRLS } from '@/lib/available-models';
+import { canAccessPlan } from '@/lib/plans';
+import { getEffectivePlan, initTrialIfMissing, type SubscriptionState } from '@/lib/subscription';
 import { useFavorites } from '@/hooks/useFavorites';
 import { Badge } from '@/components/ui/badge';
 import { Button, LinkButton } from '@/components/ui/button';
@@ -13,6 +15,11 @@ import { Card } from '@/components/ui/card';
 export default function GenerateLanding() {
   const router = useRouter();
   const { favorites, isReady, toggle } = useFavorites();
+  const [subscription, setSubscription] = useState<SubscriptionState>({ planId: 'free' });
+
+  useEffect(() => {
+    setSubscription(initTrialIfMissing());
+  }, []);
 
   const favoriteModels = useMemo(
     () => AVAILABLE_GIRLS.filter((model) => favorites.includes(model.id)),
@@ -20,6 +27,7 @@ export default function GenerateLanding() {
   );
 
   const hasFavorites = favoriteModels.length > 0;
+  const effectivePlan = getEffectivePlan(subscription);
 
   if (!isReady) {
     return (
@@ -95,9 +103,9 @@ export default function GenerateLanding() {
 
               <div className="mt-4 flex items-center gap-2">
                 <h3 className="text-lg font-semibold leading-tight">{model.displayName}</h3>
-                <Badge text={model.ageBadge} />
+                <Badge text={model.contentRating} />
               </div>
-              <p className="mt-1 text-sm text-muted">{model.niche}</p>
+              <p className="mt-1 text-sm text-muted">{model.specialization}</p>
 
               <div className="mt-3 flex flex-wrap gap-2">
                 {visibleTags.map((tag) => (
@@ -106,9 +114,13 @@ export default function GenerateLanding() {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-2">
-                <Button className="flex-1 min-w-28" onClick={() => router.push(`/app/models/${model.id}/generate`)}>
-                  Генерировать
-                </Button>
+                {canAccessPlan(effectivePlan, model.access) ? (
+                  <Button className="flex-1 min-w-28" onClick={() => router.push(`/app/models/${model.id}/generate`)}>
+                    Генерировать
+                  </Button>
+                ) : (
+                  <LinkButton href="/app/billing" className="flex-1 min-w-28">Открыть тарифы</LinkButton>
+                )}
                 <LinkButton href={`/app/models/${model.id}`} variant="secondary" className="flex-1 min-w-24">
                   Профиль
                 </LinkButton>

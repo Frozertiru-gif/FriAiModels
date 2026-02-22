@@ -1,7 +1,12 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { BarChart3, CalendarClock, CheckCircle2, Layers3, Sparkles, Wand2 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { mockSession } from '@/lib/mock/auth';
+import { PlansGrid } from '@/components/pricing/plans-grid';
+import { getEffectivePlan, getTrialDaysLeft, initTrialIfMissing, isTrialActive, type SubscriptionState } from '@/lib/subscription';
 
 const statusCards = [
   { title: 'Модели', description: 'Добавляйте и настраивайте модели', href: '/app/models', icon: Layers3 },
@@ -26,7 +31,15 @@ const nextSteps = [
 
 export default function DashboardPage() {
   const username = mockSession.user?.name ?? '';
+  const [subscription, setSubscription] = useState<SubscriptionState>({ planId: 'free' });
+
+  useEffect(() => {
+    setSubscription(initTrialIfMissing());
+  }, []);
   const greeting = username ? `Добро пожаловать, ${username}` : 'Добро пожаловать';
+  const effectivePlan = getEffectivePlan(subscription);
+  const trialActive = isTrialActive(subscription);
+  const trialDays = getTrialDaysLeft(subscription);
 
   return (
     <div className="space-y-6">
@@ -50,7 +63,7 @@ export default function DashboardPage() {
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-muted">План</dt>
-                <dd className="text-foreground">—</dd>
+                <dd className="text-foreground">{effectivePlan.toUpperCase()}</dd>
               </div>
             </dl>
           </div>
@@ -88,6 +101,20 @@ export default function DashboardPage() {
           );
         })}
       </div>
+
+
+      <Card className="bg-card/65">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-xl font-semibold">Тарифы</h2>
+            <p className="mt-1 text-sm text-muted">{trialActive ? `Trial активен: осталось ${trialDays} дн.` : 'Trial закончился, доступ ограничен Free-планом.'}</p>
+          </div>
+          <Link href="/app/billing" className="text-sm text-accent hover:text-accent-glow">Апгрейд</Link>
+        </div>
+        <div className="mt-5">
+          <PlansGrid currentPlanId={effectivePlan} compact />
+        </div>
+      </Card>
 
       <Card className="bg-card/65">
         <h2 className="text-xl font-semibold">Следующие шаги</h2>

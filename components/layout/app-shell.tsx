@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, Menu } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { getEffectivePlan, initTrialIfMissing, type SubscriptionState } from '@/lib/subscription';
 
 const items = [
   { href: '/app', label: 'Dashboard' },
@@ -18,6 +19,11 @@ const items = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [subscription, setSubscription] = useState<SubscriptionState>({ planId: 'free' });
+
+  useEffect(() => {
+    setSubscription(initTrialIfMissing());
+  }, []);
   const currentItem = items.find((item) => (item.href === '/app' ? pathname === item.href : pathname.startsWith(item.href)));
   const pageTitle = currentItem?.label ?? 'Dashboard';
 
@@ -60,7 +66,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <ChevronRight className="size-4 text-muted" />
             <span className="font-medium text-foreground">{pageTitle}</span>
           </div>
-          <div className="rounded-full border border-border bg-card/80 px-3 py-1 text-xs text-muted backdrop-blur">User workspace</div>
+          <div className="rounded-full border border-border bg-card/80 px-3 py-1 text-xs text-muted backdrop-blur">Plan: {getEffectivePlan(subscription).toUpperCase()}</div>
         </header>
         <div className="relative p-4 md:p-8">{children}</div>
       </main>

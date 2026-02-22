@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import { LinkButton } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { plans } from '@/lib/mock/plans';
+import { PLANS } from '@/lib/plans';
 
 const faqs = [
   ['Do I need coding skills?', 'No. The platform is built for creators and teams with no-code workflows.'],
@@ -64,9 +64,9 @@ export default function HomePage() {
       <section className="section-container">
         <h2 className="section-title">Pricing preview</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {plans.map((plan) => (
-            <Card key={plan.id} className={plan.highlighted ? 'border-accent shadow-soft' : ''}>
-              <h3 className="text-lg font-semibold">{plan.tier}</h3>
+          {PLANS.map((plan) => (
+            <Card key={plan.id} className={plan.isPopular ? 'border-accent shadow-soft' : ''}>
+              <h3 className="text-lg font-semibold">{plan.name}</h3>
               <p className="mt-2 text-3xl font-semibold">${plan.priceMonthly}<span className="text-sm text-muted"> /mo</span></p>
             </Card>
           ))}

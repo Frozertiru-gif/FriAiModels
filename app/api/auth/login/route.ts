@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { normalizeEmail, verifyPassword } from '@/lib/auth';
 import { ensureDataDir } from '@/lib/ensureDataDir';
 import { prisma } from '@/lib/prisma';
+import { ensureAuthSchema } from '@/lib/ensureAuthSchema';
 
 export const runtime = 'nodejs';
 
@@ -18,6 +19,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   ensureDataDir();
+  await ensureAuthSchema();
 
   const email = normalizeEmail(parsed.data.email);
   const user = await prisma.user.findUnique({

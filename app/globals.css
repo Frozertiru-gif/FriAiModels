@@ -6,6 +6,10 @@
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   @apply border-border;
 }
@@ -30,5 +34,12 @@ a {
 
   .section-title {
     @apply text-3xl font-semibold tracking-tight md:text-4xl;
+  }
+}
+
+
+@layer components {
+  .section-divider {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-accent/35 to-transparent;
   }
 }

@@ -1,19 +1,14 @@
-import { notFound } from 'next/navigation';
-import { ModelDetailTabs } from '@/components/app/model-detail-tabs';
+import Link from 'next/link';
 import { Card } from '@/components/ui/card';
-import { models } from '@/lib/mock/models';
 
-export default function ModelDetailsPage({ params }: { params: { id: string } }) {
-  const model = models.find((item) => item.id === params.id);
-  if (!model) notFound();
-
+export default function ModelDetailsPage() {
   return (
-    <div className="space-y-4">
-      <Card>
-        <h1 className="text-2xl font-semibold">{model.name}</h1>
-        <p className="mt-1 text-sm text-muted">{model.type} model optimized for {model.platformFocus.join(', ')}</p>
-      </Card>
-      <ModelDetailTabs model={model} />
-    </div>
+    <Card className="py-10 text-center">
+      <h1 className="text-2xl font-semibold tracking-tight">Карточка модели появится после создания</h1>
+      <p className="mt-2 text-sm text-muted">Пока у вас нет сохранённых моделей. После создания здесь будут параметры, контент и расписание.</p>
+      <Link href="/app/models" className="mt-6 inline-flex rounded-lg border border-border px-4 py-2 text-sm hover:bg-card">
+        Вернуться к разделу моделей
+      </Link>
+    </Card>
   );
 }

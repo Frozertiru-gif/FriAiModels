@@ -2,8 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
-import { generationJobs } from '@/lib/mock/jobs';
-import { formatDate } from '@/lib/utils';
 
 export default function GeneratePage() {
   return (
@@ -21,14 +19,10 @@ export default function GeneratePage() {
         </div>
       </Card>
       <Card>
-        <h2 className="text-lg font-semibold">Recent jobs</h2>
-        <div className="mt-4 space-y-2 text-sm">
-          {generationJobs.slice(0, 8).map((job) => (
-            <div key={job.id} className="rounded-lg border border-border bg-background/70 p-3">
-              <p className="font-medium">{job.prompt}</p>
-              <p className="text-muted">{job.status} • {job.outputType} • {formatDate(job.createdAt)}</p>
-            </div>
-          ))}
+        <h2 className="text-lg font-semibold">Generation queue</h2>
+        <div className="mt-4 rounded-xl border border-dashed border-border bg-background/40 p-6 text-center">
+          <p className="font-medium">История генераций пока пуста</p>
+          <p className="mt-2 text-sm text-muted">Запустите первую задачу, чтобы увидеть статус и результаты в этой секции.</p>
         </div>
       </Card>
     </div>

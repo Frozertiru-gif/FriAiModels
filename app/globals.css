@@ -21,7 +21,7 @@ a {
 
 @layer components {
   .surface {
-    @apply rounded-2xl border border-border bg-card/70 backdrop-blur;
+    @apply rounded-2xl border border-white/10 bg-card/70 shadow-[0_18px_55px_-24px_rgba(0,0,0,0.8)] backdrop-blur;
   }
 
   .section-container {

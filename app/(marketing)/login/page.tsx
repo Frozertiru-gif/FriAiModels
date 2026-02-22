@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -14,9 +14,13 @@ type LoginState = {
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [state, setState] = useState<LoginState>({ error: null, success: null, loading: false });
+
+  const nextPathRaw = searchParams.get('next');
+  const nextPath = nextPathRaw && nextPathRaw.startsWith('/') && !nextPathRaw.startsWith('//') ? nextPathRaw : '/app';
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -38,6 +42,8 @@ export default function LoginPage() {
     }
 
     setState({ error: null, success: 'Logged in (mock).', loading: false });
+    router.replace(nextPath);
+    router.refresh();
   }
 
   return (
@@ -76,12 +82,6 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={state.loading}>
               {state.loading ? 'Signing in...' : 'Login'}
             </Button>
-
-            {state.success ? (
-              <Button type="button" variant="secondary" className="w-full" onClick={() => router.push('/app')}>
-                Go to app
-              </Button>
-            ) : null}
           </form>
         </Card>
       </div>

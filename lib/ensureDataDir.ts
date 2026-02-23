@@ -1,10 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { getDatabaseUrl, resolveSqliteFilePath } from '@/lib/database';
+import { ensureDataDir as ensureDataDirImpl } from './ensureDataDir.mjs';
 
 export function ensureDataDir(): void {
-  const resolvedDbPath = resolveSqliteFilePath(getDatabaseUrl());
-  const dataDir = path.dirname(resolvedDbPath);
-
-  fs.mkdirSync(dataDir, { recursive: true });
+  ensureDataDirImpl();
 }
